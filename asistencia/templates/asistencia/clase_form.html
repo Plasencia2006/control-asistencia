@@ -5,7 +5,8 @@
 {% block content %}
 <h2>{% if object %}Editar{% else %}Nueva{% endif %} Clase</h2>
 
-<form method="post" enctype="multipart/form-data" class="mt-4">
+<!-- ✅ NO necesita enctype porque no subimos archivos -->
+<form method="post">
     {% csrf_token %}
     <div class="mb-3">
         <label class="form-label">{{ form.curso.label }}</label>
@@ -34,10 +35,12 @@
         {{ form.aula }}
         {% if form.aula.errors %}<div class="text-danger">{{ form.aula.errors }}</div>{% endif %}
     </div>
+    <!-- ✅ CAMPO DE URL PARA IMAGEN -->
     <div class="mb-3">
-        <label class="form-label">{{ form.foto_curso.label }}</label>
-        {{ form.foto_curso }}
-        {% if form.foto_curso.errors %}<div class="text-danger">{{ form.foto_curso.errors }}</div>{% endif %}
+        <label class="form-label">{{ form.foto_url.label }}</label>
+        {{ form.foto_url }}
+        <small class="form-text text-muted">{{ form.foto_url.help_text }}</small>
+        {% if form.foto_url.errors %}<div class="text-danger">{{ form.foto_url.errors }}</div>{% endif %}
     </div>
     <button type="submit" class="btn btn-primary">
         <i class="bi bi-save"></i> Guardar

@@ -10,8 +10,10 @@
 <div class="row">
     <div class="col-md-6">
         <div class="card">
-            {% if clase.foto_curso %}
-                <img src="{{ clase.foto_curso.url }}" class="card-img-top" alt="{{ clase.curso }}">
+            <!-- ✅ IMAGEN CON URL -->
+            {% if clase.foto_url %}
+                <img src="{{ clase.foto_url }}" class="card-img-top" alt="{{ clase.curso }}"
+                     onerror="this.src='https://via.placeholder.com/400x300?text=Sin+Imagen'">
             {% endif %}
             <div class="card-body">
                 <h3>{{ clase.curso }}</h3>
