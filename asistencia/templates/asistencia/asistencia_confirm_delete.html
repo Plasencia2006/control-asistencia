@@ -1,0 +1,22 @@
+{% extends 'asistencia/base.html' %}
+
+{% block title %}Eliminar Asistencia{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-danger text-white">
+        <h5>Confirmar Eliminación</h5>
+    </div>
+    <div class="card-body">
+        <p>¿Está seguro que desea eliminar el registro de asistencia de <strong>{{ object.alumno }}</strong> de la clase <strong>{{ object.clase.curso }}</strong>?</p>
+        <p class="text-danger">Esta acción no se puede deshacer.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Sí, Eliminar
+            </button>
+            <a href="{% url 'asistencia_list' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

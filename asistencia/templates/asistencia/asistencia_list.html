@@ -1,0 +1,85 @@
+{% extends 'asistencia/base.html' %}
+
+{% block title %}Lista de Asistencias{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people"></i> Lista de Asistencias</h2>
+    <a href="{% url 'asistencia_create' %}" class="btn btn-success">
+        <i class="bi bi-plus"></i> Nueva Asistencia
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-primary">
+            <tr>
+                <th>Foto</th>
+                <th>Alumno</th>
+                <th>Clase</th>
+                <th>Estado</th>
+                <th>Fecha Registro</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for asistencia in asistencias %}
+            <tr>
+                <td>
+                    {% if asistencia.foto_alumno %}
+                        <img src="{{ asistencia.foto_alumno.url }}" alt="{{ asistencia.alumno }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                    {% else %}
+                        <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                            <i class="bi bi-person"></i>
+                        </div>
+                    {% endif %}
+                </td>
+                <td>{{ asistencia.alumno }}</td>
+                <td>{{ asistencia.clase.curso }}</td>
+                <td>
+                    <span class="badge 
+                        {% if asistencia.estado == 'P' %}bg-success
+                        {% elif asistencia.estado == 'A' %}bg-danger
+                        {% elif asistencia.estado == 'T' %}bg-warning
+                        {% else %}bg-info{% endif %}">
+                        {{ asistencia.get_estado_display }}
+                    </span>
+                </td>
+                <td>{{ asistencia.fecha_registro|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <a href="{% url 'asistencia_detail' asistencia.pk %}" class="btn btn-info btn-sm">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                    <a href="{% url 'asistencia_update' asistencia.pk %}" class="btn btn-warning btn-sm">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                    <a href="{% url 'asistencia_delete' asistencia.pk %}" class="btn btn-danger btn-sm">
+                        <i class="bi bi-trash"></i>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center">No hay asistencias registradas</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% if is_paginated %}
+<nav>
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">Primera</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+        {% endif %}
+        <li class="page-item active"><span class="page-link">{{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

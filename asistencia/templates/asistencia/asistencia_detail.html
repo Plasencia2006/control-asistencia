@@ -1,0 +1,71 @@
+{% extends 'asistencia/base.html' %}
+
+{% block title %}{{ asistencia.alumno }} - {{ asistencia.clase.curso }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'asistencia_list' %}" class="btn btn-secondary mb-3">
+    <i class="bi bi-arrow-left"></i> Volver
+</a>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5>Información del Alumno</h5>
+            </div>
+            <div class="card-body text-center">
+                {% if asistencia.foto_alumno %}
+                    <img src="{{ asistencia.foto_alumno.url }}" alt="{{ asistencia.alumno }}" class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
+                {% else %}
+                    <div class="bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-3" style="width: 200px; height: 200px;">
+                        <i class="bi bi-person" style="font-size: 5rem;"></i>
+                    </div>
+                {% endif %}
+                <h4>{{ asistencia.alumno }}</h4>
+                <p>
+                    <strong>Estado:</strong> 
+                    <span class="badge 
+                        {% if asistencia.estado == 'P' %}bg-success
+                        {% elif asistencia.estado == 'A' %}bg-danger
+                        {% elif asistencia.estado == 'T' %}bg-warning
+                        {% else %}bg-info{% endif %}">
+                        {{ asistencia.get_estado_display }}
+                    </span>
+                </p>
+                <p><strong>Fecha de Registro:</strong> {{ asistencia.fecha_registro|date:"d/m/Y H:i:s" }}</p>
+                {% if asistencia.observaciones %}
+                    <p><strong>Observaciones:</strong> {{ asistencia.observaciones }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5>Información de la Clase</h5>
+            </div>
+            <div class="card-body">
+                <p>
+                    <strong>Curso:</strong> {{ asistencia.clase.curso }}<br>
+                    <strong>Docente:</strong> {{ asistencia.clase.docente }}<br>
+                    <strong>Fecha:</strong> {{ asistencia.clase.fecha }}<br>
+                    <strong>Hora:</strong> {{ asistencia.clase.hora_inicio }}<br>
+                    <strong>Aula:</strong> {{ asistencia.clase.aula }}
+                </p>
+                <a href="{% url 'clase_detail' asistencia.clase.pk %}" class="btn btn-primary">
+                    <i class="bi bi-eye"></i> Ver Clase
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-3">
+    <a href="{% url 'asistencia_update' asistencia.pk %}" class="btn btn-warning">
+        <i class="bi bi-pencil"></i> Editar
+    </a>
+    <a href="{% url 'asistencia_delete' asistencia.pk %}" class="btn btn-danger">
+        <i class="bi bi-trash"></i> Eliminar
+    </a>
+</div>
+{% endblock %}

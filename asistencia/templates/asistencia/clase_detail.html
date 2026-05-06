@@ -1,0 +1,74 @@
+{% extends 'asistencia/base.html' %}
+
+{% block title %}{{ clase.curso }}{% endblock %}
+
+{% block content %}
+<a href="{% url 'clase_list' %}" class="btn btn-secondary mb-3">
+    <i class="bi bi-arrow-left"></i> Volver
+</a>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            {% if clase.foto_curso %}
+                <img src="{{ clase.foto_curso.url }}" class="card-img-top" alt="{{ clase.curso }}">
+            {% endif %}
+            <div class="card-body">
+                <h3>{{ clase.curso }}</h3>
+                <p>
+                    <strong>Docente:</strong> {{ clase.docente }}<br>
+                    <strong>Fecha:</strong> {{ clase.fecha }}<br>
+                    <strong>Hora:</strong> {{ clase.hora_inicio }}<br>
+                    <strong>Aula:</strong> {{ clase.aula }}
+                </p>
+                <a href="{% url 'clase_update' clase.pk %}" class="btn btn-warning">
+                    <i class="bi bi-pencil"></i> Editar
+                </a>
+                <a href="{% url 'clase_delete' clase.pk %}" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Eliminar
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5>Asistencias de esta Clase</h5>
+            </div>
+            <div class="card-body">
+                {% if clase.asistencias.all %}
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for asistencia in clase.asistencias.all %}
+                            <tr>
+                                <td>{{ asistencia.alumno }}</td>
+                                <td>
+                                    <span class="badge 
+                                        {% if asistencia.estado == 'P' %}bg-success
+                                        {% elif asistencia.estado == 'A' %}bg-danger
+                                        {% elif asistencia.estado == 'T' %}bg-warning
+                                        {% else %}bg-info{% endif %}">
+                                        {{ asistencia.get_estado_display }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>No hay asistencias registradas para esta clase</p>
+                {% endif %}
+                <a href="{% url 'asistencia_create' %}?clase={{ clase.pk }}" class="btn btn-success">
+                    <i class="bi bi-plus"></i> Agregar Asistencia
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

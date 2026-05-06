@@ -1,0 +1,72 @@
+{% extends 'asistencia/base.html' %}
+
+{% block title %}Inicio - Control de Asistencia{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 text-center mb-5">
+        <h1><i class="bi bi-calendar-check"></i> Sistema de Control de Asistencia</h1>
+        <p class="lead">Gestión de clases y registro de asistencia</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-book"></i> Total de Clases</h5>
+                <p class="card-text display-4">{{ clases_count }}</p>
+                <a href="{% url 'clase_list' %}" class="btn btn-light">Ver Clases</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-people"></i> Registros de Asistencia</h5>
+                <p class="card-text display-4">{{ asistencias_count }}</p>
+                <a href="{% url 'asistencia_list' %}" class="btn btn-light">Ver Asistencias</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5><i class="bi bi-plus-circle"></i> Acciones Rápidas</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'clase_create' %}" class="btn btn-primary w-100 mb-2">
+                    <i class="bi bi-plus"></i> Nueva Clase
+                </a>
+                <a href="{% url 'asistencia_create' %}" class="btn btn-success w-100">
+                    <i class="bi bi-plus"></i> Registrar Asistencia
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5><i class="bi bi-clock-history"></i> Clases Recientes</h5>
+            </div>
+            <div class="card-body">
+                {% if clases_recientes %}
+                    <ul class="list-group">
+                        {% for clase in clases_recientes %}
+                            <li class="list-group-item">
+                                <strong>{{ clase.curso }}</strong><br>
+                                <small>{{ clase.fecha }} - {{ clase.docente }}</small>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No hay clases registradas</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

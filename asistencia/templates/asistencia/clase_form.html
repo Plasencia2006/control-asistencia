@@ -1,0 +1,47 @@
+{% extends 'asistencia/base.html' %}
+
+{% block title %}{% if object %}Editar{% else %}Nueva{% endif %} Clase{% endblock %}
+
+{% block content %}
+<h2>{% if object %}Editar{% else %}Nueva{% endif %} Clase</h2>
+
+<form method="post" enctype="multipart/form-data" class="mt-4">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">{{ form.curso.label }}</label>
+        {{ form.curso }}
+        {% if form.curso.errors %}<div class="text-danger">{{ form.curso.errors }}</div>{% endif %}
+    </div>
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ form.fecha.label }}</label>
+            {{ form.fecha }}
+            {% if form.fecha.errors %}<div class="text-danger">{{ form.fecha.errors }}</div>{% endif %}
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label">{{ form.hora_inicio.label }}</label>
+            {{ form.hora_inicio }}
+            {% if form.hora_inicio.errors %}<div class="text-danger">{{ form.hora_inicio.errors }}</div>{% endif %}
+        </div>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{ form.docente.label }}</label>
+        {{ form.docente }}
+        {% if form.docente.errors %}<div class="text-danger">{{ form.docente.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{ form.aula.label }}</label>
+        {{ form.aula }}
+        {% if form.aula.errors %}<div class="text-danger">{{ form.aula.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{ form.foto_curso.label }}</label>
+        {{ form.foto_curso }}
+        {% if form.foto_curso.errors %}<div class="text-danger">{{ form.foto_curso.errors }}</div>{% endif %}
+    </div>
+    <button type="submit" class="btn btn-primary">
+        <i class="bi bi-save"></i> Guardar
+    </button>
+    <a href="{% url 'clase_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

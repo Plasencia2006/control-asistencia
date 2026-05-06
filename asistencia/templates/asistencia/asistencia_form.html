@@ -1,0 +1,40 @@
+{% extends 'asistencia/base.html' %}
+
+{% block title %}{% if object %}Editar{% else %}Nueva{% endif %} Asistencia{% endblock %}
+
+{% block content %}
+<h2>{% if object %}Editar{% else %}Nueva{% endif %} Asistencia</h2>
+
+<form method="post" enctype="multipart/form-data" class="mt-4">
+    {% csrf_token %}
+    <div class="mb-3">
+        <label class="form-label">{{ form.alumno.label }}</label>
+        {{ form.alumno }}
+        {% if form.alumno.errors %}<div class="text-danger">{{ form.alumno.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{ form.clase.label }}</label>
+        {{ form.clase }}
+        {% if form.clase.errors %}<div class="text-danger">{{ form.clase.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{ form.estado.label }}</label>
+        {{ form.estado }}
+        {% if form.estado.errors %}<div class="text-danger">{{ form.estado.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{ form.foto_alumno.label }}</label>
+        {{ form.foto_alumno }}
+        {% if form.foto_alumno.errors %}<div class="text-danger">{{ form.foto_alumno.errors }}</div>{% endif %}
+    </div>
+    <div class="mb-3">
+        <label class="form-label">{{ form.observaciones.label }}</label>
+        {{ form.observaciones }}
+        {% if form.observaciones.errors %}<div class="text-danger">{{ form.observaciones.errors }}</div>{% endif %}
+    </div>
+    <button type="submit" class="btn btn-success">
+        <i class="bi bi-save"></i> Guardar
+    </button>
+    <a href="{% url 'asistencia_list' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
