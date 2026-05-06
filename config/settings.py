@@ -13,7 +13,6 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=Csv())
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -22,13 +21,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'asistencia',
-    # Agrega esto:
+    # ✅ ESTO ES OBLIGATORIO:
     'cloudinary',
     'cloudinary_storage',
 ]
 
-# django-extensions solo para desarrollo
-# Media files
+
+# Media files - CONFIGURACIÓN CORRECTA
 if not DEBUG:
     # Cloudinary para producción
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
@@ -36,13 +35,22 @@ if not DEBUG:
         'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
         'API_KEY': config('CLOUDINARY_API_KEY'),
         'API_SECRET': config('CLOUDINARY_API_SECRET'),
-        'SECURE': True,
     }
     MEDIA_URL = '/media/'
 else:
     # Local para desarrollo
     MEDIA_URL = 'media/'
     MEDIA_ROOT = BASE_DIR / 'media'
+
+# Configuración explícita de Cloudinary al final del archivo
+if not DEBUG:
+    import cloudinary
+    cloudinary.config(
+        cloud_name=config('CLOUDINARY_CLOUD_NAME'),
+        api_key=config('CLOUDINARY_API_KEY'),
+        api_secret=config('CLOUDINARY_API_SECRET'),
+        secure=True
+    )
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
