@@ -17,7 +17,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'asistencia',
 ]
-INSTALLED_APPS += ['django_extensions']
+
+# Agregar django_extensions SOLO en desarrollo
+from decouple import config
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+if DEBUG:
+    INSTALLED_APPS += ['django_extensions']
+    
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
