@@ -14,13 +14,14 @@
     {% for clase in clases %}
     <div class="col-md-4 mb-4">
         <div class="card h-100">
-            {% if clase.foto_curso %}
-                <img src="{{ clase.foto_curso.url }}" class="card-img-top" alt="{{ clase.curso }}" style="height: 200px; object-fit: cover;">
-            {% else %}
-                <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
-                    <i class="bi bi-book" style="font-size: 4rem;"></i>
-                </div>
-            {% endif %}
+           {% if clase.foto_url %}
+    <img src="{{ clase.foto_url }}" class="card-img-top" alt="{{ clase.curso }}" style="height: 200px; object-fit: cover;">
+{% else %}
+    <!-- Imagen por defecto si no hay link -->
+    <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+        <i class="bi bi-book" style="font-size: 4rem;"></i>
+    </div>
+{% endif %}
             <div class="card-body">
                 <h5 class="card-title">{{ clase.curso }}</h5>
                 <p class="card-text">

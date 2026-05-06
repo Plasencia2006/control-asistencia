@@ -5,9 +5,10 @@ class Clase(models.Model):
     curso = models.CharField(max_length=100, verbose_name="Nombre del Curso")
     fecha = models.DateField(verbose_name="Fecha de Clase")
     docente = models.CharField(max_length=100, verbose_name="Nombre del Docente")
-    foto_curso = models.ImageField(upload_to='cursos/', verbose_name="Imagen del Curso", blank=True, null=True)
+    foto_url = models.URLField(verbose_name="Link de la Imagen", blank=True, null=True, help_text="Pega aquí el link de la imagen (ej: https://i.imgur.com/...)")
     hora_inicio = models.TimeField(verbose_name="Hora de Inicio", default="08:00")
     aula = models.CharField(max_length=50, verbose_name="Aula", default="A-101")
+    
     
     class Meta:
         verbose_name = "Clase"

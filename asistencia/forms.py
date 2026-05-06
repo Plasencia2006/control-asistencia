@@ -16,7 +16,7 @@ class ClaseForm(forms.ModelForm):
 class AsistenciaForm(forms.ModelForm):
     class Meta:
         model = Asistencia
-        fields = ['alumno', 'estado', 'clase', 'foto_alumno', 'observaciones']
+        fields = ['curso', 'fecha', 'docente', 'foto_url', 'hora_inicio', 'aula']
         widgets = {
             'alumno': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Nombre del alumno'}),
             'estado': forms.Select(attrs={'class': 'form-control'}),
